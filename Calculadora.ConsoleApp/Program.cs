@@ -2,11 +2,8 @@
  * requisito 2 ok
  * requisito 3 ok
  * requisito 4 ok
- * requisito 5 em andamento
- * 
- * 
- * 
- * 
+ * requisito 5 ok
+ * requisito 6 em andamento
  * 
  */
 
@@ -18,10 +15,14 @@ namespace Calculadora.ConsoleApp
     {
         static void Main(string[] args)
         {
+            // Variáveis
             string option;
+            int regOps;
+
+            // Entradas
 
             Console.WriteLine("Digite os números abaixo, Dona Mariana :)\n");
-            while (true)
+            while (true) // Continue1 volta pra cá
             {
 
                 Console.WriteLine("|.... Digite '1' para somar ........|");
@@ -36,6 +37,16 @@ namespace Calculadora.ConsoleApp
 
                 // Verificará se foi selecionado algo inválido
                 if(option != "1"  && option != "2" && option != "3" && option != "4" && option != "5" && option != "s")
+                {
+                    Console.Clear();
+                    Console.Beep();
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\n-~= Opção indisponível, digite uma válida! =~-\n");
+                    Console.ResetColor();
+                    continue; // Continue1
+                }
+
+                if(option == "5")
                 {
 
                 }
