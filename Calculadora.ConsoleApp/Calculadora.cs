@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Calculadora.ConsoleApp
 {
@@ -13,39 +9,60 @@ namespace Calculadora.ConsoleApp
         {
             for (int posicao = 0; posicao < calculos.Length; posicao++)
             {
-                if(calculos[posicao] == null)
-                return posicao;
+                if (calculos[posicao] == null)
+                    return posicao;
             }
             return -1;
         }
         public void Somar()
         {
-            RealizarCalculo();
+            RealizarCalculo("somar", '+');
         }
         public void Subtrair()
         {
-            RealizarCalculo();
+            RealizarCalculo("somar", '-');
 
         }
         public void Multiplicar()
         {
-            RealizarCalculo();
+            RealizarCalculo("multiplicar", '*');
         }
         public void Dividir()
         {
-            RealizarCalculo();
+            RealizarCalculo("dividir", '/');
         }
-        private void RealizarCalculo()
+        private void RealizarCalculo(string operacao, char operador)
         {
             int posicao = EncontrarPosicaoDisponivel();
             Calculo calculo = new();
-            MostrarOperacao("multiplicar");
-            Console.Write("1º número: \n> ");
+            MostrarOperacao(operacao);
+            Console.Write("1º número: ");
             calculo.numeroUm = decimal.Parse(Console.ReadLine());
-            Console.Write("2º número: \n> ");
+            resolveDivisaoPorZero:
+            Console.Write("2º número: ");
             calculo.numeroDois = decimal.Parse(Console.ReadLine());
-            calculo.operador = '*';
-            calculo.resultado = calculo.numeroUm * calculo.numeroDois;
+            if (operador == '/' && calculo.numeroDois == 0)
+            {
+                Console.WriteLine("Impossível dividir po 0, insira outro número: ");
+                goto resolveDivisaoPorZero;
+            }
+            calculo.operador = operador;
+            switch (operador)
+            {
+                case '+':
+                    calculo.resultado = calculo.numeroUm + calculo.numeroDois;
+                    break;
+                case '-':
+                    calculo.resultado = calculo.numeroUm - calculo.numeroDois;
+                    break;
+                case '/':
+                    calculo.resultado = calculo.numeroUm / calculo.numeroDois;
+                    break;
+                case '*':
+                    calculo.resultado = calculo.numeroUm * calculo.numeroDois;
+                    break;
+            }
+
             calculos[posicao] = calculo;
             ExibirResultado(calculo);
         }
@@ -54,9 +71,10 @@ namespace Calculadora.ConsoleApp
             Console.Clear();
             for (int i = 0; i < calculos.Length; i++)
             {
-                if(calculos[i] != null)
-                Console.WriteLine((i+1) + "º.: " + calculos[i].numeroUm + " " + calculos[i].operador + " " + calculos[i].numeroDois + " = " + calculos[i].resultado);
+                if (calculos[i] != null)
+                    Console.WriteLine((i + 1) + " : " + calculos[i].numeroUm + " " + calculos[i].operador + " " + calculos[i].numeroDois + " = " + calculos[i].resultado);
             }
+            Console.WriteLine("\nPressione 'enter' para continuar...");
             Console.ReadKey();
             Console.Clear();
         }
@@ -64,6 +82,7 @@ namespace Calculadora.ConsoleApp
         {
             Console.Clear();
             Console.WriteLine(calculo.numeroUm + " " + calculo.operador + " " + calculo.numeroDois + " = " + calculo.resultado);
+            Console.WriteLine("\nPressione 'enter' para continuar...");
             Console.ReadKey();
             Console.Clear();
         }
